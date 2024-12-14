@@ -1,6 +1,7 @@
 import { Usuario } from "../models/usuario";
 import { usuario } from "../seeds/usuarioSeeds";
 
+// Listando os usuários de teste
 export const listarUsuarios = (usuarios: Usuario[]): void => {
     console.log('Lista de usuários:');
     usuarios.forEach((usu) => {
@@ -9,6 +10,3 @@ export const listarUsuarios = (usuarios: Usuario[]): void => {
 };
 
 listarUsuarios(usuario)
-
- 
-
