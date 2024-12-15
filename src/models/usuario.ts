@@ -1,5 +1,3 @@
-import { Papeis } from "./papeis";
-
 export type Status = 'ativo' | 'inativo';
 
 export interface Usuario {
@@ -7,7 +5,7 @@ export interface Usuario {
     nome: string,
     email: string,
     senha: string,
-    papel: Papeis,
+    papel: string,
     dataCadastro: Date,
     dataUltimaAlteracao: Date,
     status: Status

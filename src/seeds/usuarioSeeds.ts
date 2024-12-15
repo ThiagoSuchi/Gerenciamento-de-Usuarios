@@ -1,4 +1,3 @@
-import { Papeis } from "../models/papeis";
 import { Usuario } from "../models/usuario";
 import { v4 as uuidv4 } from "uuid"
 
@@ -8,7 +7,7 @@ export const usuario: Usuario[] = [
     nome: 'Roberto Carlo Cunha',
     email: 'robertinCarl@gmail.com',
     senha: 'robertCunha2233$',
-    papel: Papeis.Professor,
+    papel: 'Administrador',
     dataCadastro: new Date('2024-05-22T15:34:00'),
     dataUltimaAlteracao: new Date('2024-11-10T07:40:00'),
     status: 'ativo'
@@ -18,7 +17,7 @@ export const usuario: Usuario[] = [
     nome: 'Letícia Gomes Lionhoff',
     email: 'leleticiaLio@gmail.com',
     senha: 'Leti33gomesS#',
-    papel: Papeis.Administrador,
+    papel: 'Professor',
     dataCadastro: new Date('2024-01-10T06:55:00'),
     dataUltimaAlteracao: new Date('2024-11-16T10:52:00'),
     status: 'ativo'
