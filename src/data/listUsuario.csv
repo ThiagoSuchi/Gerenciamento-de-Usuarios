@@ -1,3 +1,5 @@
 Id | Nome | E-mail | Senha | Papel | Data de Cadastro | Data da Última Alteração | Status
-1, Roberto Carlo Cunha, robertinCarl@gmail.com, robertCunha2233$, Administrador, Wed May 22 2024 15:34:00 GMT-0400 (Horário Padrão do Amazonas), Sun Nov 10 2024 07:40:00 GMT-0400 (Horário Padrão do Amazonas), ativo
-2, Thiago da Massa, leleticiaLio@gmail.com, Leti33gomesS#, Professor, Wed Jan 10 2024 06:55:00 GMT-0400 (Horário Padrão do Amazonas), Sat Nov 16 2024 10:52:00 GMT-0400 (Horário Padrão do Amazonas), ativo
+c00b22fd-acce-4adc-a2f3-7000221be5a1, Diogo, daniel@gmail.com, $2b$10$zpMkYPmIL.D.37LNO4Krq.hWxq2o/LOXCQQyf2Gyo4FqZhqBsGjYS, Professor, Invalid Date, Invalid Date, inativo
+35caa7d4-4cc7-4a90-8004-d6356a173645, Thiago, thiago@gmail.com, $2b$10$5i18LG3VH4iwef6Ou/9fpu7q.uF71rwJi4t7B01dVI4mu5uA7vh.W, Administrador, Invalid Date, Invalid Date, ativo
+9cf23bd8-c838-4408-91d0-665c19cd8246, Thiago, thiago@gmail.com, $2b$10$NM9AQjQbKztemrY7G4OlCupKPZ9/.8Y6QAr69j45HPWwilQYxt8ry, Admin, Invalid Date, Invalid Date, ativo
+fd8bf239-0993-4094-b298-0f08895b0c16, Duda, dudinha@gmail.com, $2b$10$cLZfdQtImc42.k2DSc8pU.z./7wTTGLlXx98Yici2UcwKyhwzQ7mu, Administrador, 15/12/2024 21:24:23, 15/12/2024 21:24:23, ativo

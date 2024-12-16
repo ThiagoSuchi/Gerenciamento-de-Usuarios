@@ -1,8 +1,20 @@
 import bcrypt from 'bcrypt';
 import { Status, Usuario } from "../models/usuario";
-import { usuario } from "../seeds/usuarioSeeds";
 import { salvarArquivo } from "./csvService";
 import { v4 as uuidv4 } from "uuid";
+import { usuario } from "../seeds/usuarioSeeds";
+
+export function dataFormatada(data: Date) {
+    return data.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    }).replace(/, /, ' ');
+}
 
 // Função para Validação de email
 const validEmail = (email: string): boolean => {
@@ -69,15 +81,13 @@ export const deletUsuario = (usuario: Usuario[], id: string) => {
 
     /* Como findIndex pode retornar -1 caso não encontre o usuário,
     foi criado uma validação de usuario: */
-    if(user === -1) {
+    if (user === -1) {
         console.log(`Usuario com id ${id} não encontrado`);
         return;
     }
 
     // Remove da lista o usuário filtrado
     usuario.splice(user, 1)
-
-    // Atualiza o arquivo csv
     salvarArquivo(usuario)
     console.log('Usuário deletado com sucesso!');
 }
@@ -89,7 +99,7 @@ export const atualizarDados = (usuario: Usuario[], id: string, novosDados:
         email?: string,
         senha?: string,
         papel?: string,
-        status?: Status
+        status?: string
     }) => {
 
     const user = usuario.find(user => user.id === id)
@@ -104,12 +114,14 @@ export const atualizarDados = (usuario: Usuario[], id: string, novosDados:
     if (novosDados.email) user.email = novosDados.email;
     if (novosDados.senha) user.senha = novosDados.senha;
     if (novosDados.papel) user.papel = novosDados.papel;
-    if (novosDados.status) user.status = novosDados.status;
+    if (novosDados.status) user.status = 'ativo';
 
     salvarArquivo(usuario)
 }
 
 // Testando o código
-deletUsuario(usuario, 'f03ae71b-f270-4169-b440-4988d19c42041')
-atualizarDados(usuario, 'f03ae71b-f270-4169-b440-4988d19c42041', { nome: 'Thiago da Massa' });
-listarUsuarios(usuario);
+// cadastrarUsuario(usuario, usuario[2])
+// deletUsuario(usuario, 'f03ae71b-f270-4169-b440-4988d19c42041')
+// atualizarDados(usuario, 'f03ae71b-f270-4169-b440-4988d19c42041', { nome: 'Thiago da Massa' });
+// listarUsuarios(usuario);
+// listUsuarioId(usuario, 'f03ae71b-f270-4169-b440-4988d19c42041');

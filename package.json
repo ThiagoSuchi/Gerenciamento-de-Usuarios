@@ -4,6 +4,7 @@
   "description": "Projeto Gerenciamento de Usuários",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "start": "nodemon -r ts-node/register"
   },
   "keywords": [],
