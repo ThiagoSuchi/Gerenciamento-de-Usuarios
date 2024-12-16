@@ -16,7 +16,7 @@ const carregarUsuarios = (): Usuario[] => {
         }
 
         const data = fs.readFileSync(filePath, 'utf8');
-        const lines = data.split('\n').slice(1); // Ignorar o cabeçalho
+        const lines = data.split('\n').slice(1); 
         return lines.filter(line => line.trim()).map(line => {
             const [id, nome, email, senha, papel, dataCadastro, dataUltimaAlteracao, status] = line.split(', ');
             return {
