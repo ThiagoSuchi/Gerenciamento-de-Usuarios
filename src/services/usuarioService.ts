@@ -4,6 +4,7 @@ import { salvarArquivo } from "./csvService";
 import { v4 as uuidv4 } from "uuid";
 import { usuario } from "../seeds/usuarioSeeds";
 
+// Esta função irá formatar as datas
 export function dataFormatada(data: Date) {
     return data.toLocaleString('pt-BR', {
         day: '2-digit',
