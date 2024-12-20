@@ -20,7 +20,7 @@ export const salvarArquivo = (usuarios: Usuario[])=> {
                 user.dataCadastro,
                 user.dataUltimaAlteracao,
                 user.status
-            ].join(', ')
+            ].join(', ')// Iterei sobre os usuarios e adicionei ', ' no final de cada iteração.
         );
 
         // Adicionei o cabeçalho aos dados no arquivo csv
