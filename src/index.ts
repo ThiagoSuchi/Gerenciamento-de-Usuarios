@@ -96,7 +96,12 @@ program
     .description('Listar um usuário pelo ID')
     .action((id: string) => {
         const resultado = listUsuarioId(usuarios, id);
-        console.log(resultado);
+        if (resultado) {
+            console.log('----------- Usuário encontrado -----------');
+            console.log(`Nome: ${resultado.nome}\nEmail: ${resultado.email}\nPapel: ${resultado.papel}\nData de Cadastro: ${resultado.dataCadastro}\nStatus: ${resultado.status}`);
+        } else {
+            console.log('Usuário inválido, o id fornecido não coincide');
+        }
     });
 
 // Comando para deletar um usuário pelo ID

@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { Usuario } from "../models/usuario";
 import { salvarArquivo } from "./csvService";
 import { Status } from "../models/usuario"; // Add this line to import Status
+import { usuario } from '../seeds/usuarioSeeds';
 
 // Esta função irá formatar as datas
 export function dataFormatada(data: Date): string {
@@ -65,13 +66,7 @@ export const listarUsuarios = (usuarios: Usuario[]): void => {
 
 // Listando por id
 export const listUsuarioId = (usuario: Usuario[], idPassado: string) => {
-    const userencontrado = usuario.find(user => user.id === idPassado);
-
-    if (!userencontrado) {
-        return `Usuário com ID ${idPassado} não encontrado.`
-    }
-
-    return userencontrado;
+    return usuario.find((user) => user.id === idPassado);
 }
 
 // Deletar o usuário apartir do seu id
