@@ -6,7 +6,7 @@ export interface Usuario {
     email: string,
     senha: string,
     papel: string,
-    dataCadastro: string,
-    dataUltimaAlteracao: string,
+    dataCadastro: Date,
+    dataUltimaAlteracao: Date,
     status: Status
 }

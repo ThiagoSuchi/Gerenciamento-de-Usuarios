@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Usuario } from "../models/usuario";
 import { salvarArquivo } from "./csvService";
-import { v4 as uuidv4 } from "uuid";
-
+import { Status } from "../models/usuario"; // Add this line to import Status
 
 // Esta função irá formatar as datas
 export function dataFormatada(data: Date): string {
@@ -44,16 +43,12 @@ export const cadastrarUsuario = async (usuarios: Usuario[], usuario: Usuario) =>
         return 'Senha inválida, sua senha deve conter no mínimo 8 caracteres, letras maiúsculas, letras minúsculas, números e caracteres especiais.';
     }
 
-    // Gerando id único
-    usuario.id = uuidv4();
-
     // Criptografando a senha
     const saltRound = 10;
     usuario.senha = await bcrypt.hash(usuario.senha, saltRound)
 
-    // Inicialiando datas
-    usuario.dataCadastro = dataFormatada(new Date());
-    usuario.dataUltimaAlteracao = dataFormatada(new Date());
+    //Formatando a data
+    dataFormatada(usuario.dataCadastro)
 
     usuarios.push(usuario);
     salvarArquivo(usuarios)
@@ -104,8 +99,21 @@ export const atualizarDados = (usuario: Usuario[], id: string, novosDados:
         email?: string,
         senha?: string,
         papel?: string,
-        status?: string
+        status?: Status
     }) => {
+
+    // Validações de email, senha, nome
+    if (novosDados.nome && (novosDados.nome.length < 3 || novosDados.nome.length > 25)) {
+        return 'Nome inválido, o nome deve ter no mínimo 3 e no máximo 25 caracteres.';
+    }
+
+    if (novosDados.email && (!validEmail(novosDados.email))) {
+        return `'Este email é inválido, exemplo de email: exemple@gmail.com';`
+    }
+
+    if (novosDados.senha && (!validSenha(novosDados.senha))) {
+        return 'Senha inválida, sua senha deve conter no mínimo 8 caracteres, letras maiúsculas, letras minúsculas, números e caracteres especiais.';
+    }
 
     const user = usuario.find(user => user.id === id)
 
@@ -119,10 +127,12 @@ export const atualizarDados = (usuario: Usuario[], id: string, novosDados:
     if (novosDados.email) user.email = novosDados.email;
     if (novosDados.senha) user.senha = novosDados.senha;
     if (novosDados.papel) user.papel = novosDados.papel;
-    if (novosDados.status) user.status = 'ativo';
+    if (novosDados.status) user.status = novosDados.status;
 
     // Atualizei a data conforme a ultima alteração
-    user.dataUltimaAlteracao = dataFormatada(new Date());
+    const dataAtualizada = user.dataUltimaAlteracao = new Date();
+    dataFormatada(dataAtualizada)
+    // Salvando os novos dados no arquivo csv
     salvarArquivo(usuario);
 }
 

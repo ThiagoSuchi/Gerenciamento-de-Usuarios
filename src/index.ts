@@ -4,6 +4,7 @@ import readline from 'readline';
 import { Usuario, Status } from "./models/usuario";
 import { cadastrarUsuario, listarUsuarios, listUsuarioId, deletUsuario, atualizarDados, dataFormatada } from "./services/usuarioService";
 import { papeisUsuario } from './seeds/papeisSeeds';
+import { v4 as uuidv4 } from "uuid";
 
 // Definir o caminho do arquivo CSV
 const filePath = './src/data/listUsuario.csv';
@@ -21,20 +22,14 @@ const carregarUsuarios = (): Usuario[] => {
 
             const [id, nome, email, senha, papel, dataCadastro, dataUltimaAlteracao, status] = line.split(', ');
 
-            const dataCadastroDate = new Date(dataCadastro);
-            const dataUltimaAlteracaoDate = new Date(dataUltimaAlteracao);
-            
-            const dataCadastroFormatada = isNaN(dataCadastroDate.getTime()) ? 'Data inválida' : dataFormatada(dataCadastroDate);
-            const dataUltimaAlteracaoFormatada = isNaN(dataUltimaAlteracaoDate.getTime()) ? 'Data inválida' : dataFormatada(dataUltimaAlteracaoDate);
-
             return {
                 id,
                 nome,
                 email,
                 senha,
                 papel,
-                dataCadastro: dataCadastroFormatada,
-                dataUltimaAlteracao: dataUltimaAlteracaoFormatada,
+                dataCadastro: new Date(Date.parse(dataCadastro)),
+                dataUltimaAlteracao: new Date(Date.parse(dataUltimaAlteracao)),
                 status: status as Status
             };
         });
@@ -73,18 +68,17 @@ program
         const papel = await perguntar("Papel (ex: Administrador, Convidado, Professor): ");
 
         const novoUsuario: Usuario = {
-            id: (Math.random() * 1e8).toString(36), // Gerar um ID único simples
+            id: uuidv4(), // Gerar um ID único
             nome,
             email,
             senha,
             papel,
-            dataCadastro: dataFormatada(new Date()),
-            dataUltimaAlteracao: dataFormatada(new Date()),
+            dataCadastro: new Date(),
+            dataUltimaAlteracao: new Date(),
             status: 'ativo'
         };
 
-        const resultado = await cadastrarUsuario(usuarios, novoUsuario);
-        console.log(resultado);
+        await cadastrarUsuario(usuarios, novoUsuario);
         rl.close();
     });
 
@@ -139,7 +133,7 @@ function atualizarUsuario(id: string) {
                             email: email || undefined,
                             senha: senha || undefined,
                             papel: papel || undefined,
-                            status: status || undefined
+                            status: status as Status || undefined // Ultilizei asserção de tipo para inferir um tipo para minha variável status
                         };
 
                         // Chamando a função atualizarDados
