@@ -8,6 +8,7 @@ exports.dataFormatada = dataFormatada;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const csvService_1 = require("./csvService");
 const uuid_1 = require("uuid");
+// Esta função irá formatar as datas
 function dataFormatada(data) {
     return data.toLocaleString('pt-BR', {
         day: '2-digit',
@@ -17,7 +18,7 @@ function dataFormatada(data) {
         minute: '2-digit',
         second: '2-digit',
         hour12: false,
-    }).replace(/, /, ' ');
+    }).replace(',', '');
 }
 // Função para Validação de email
 const validEmail = (email) => {
@@ -48,6 +49,9 @@ const cadastrarUsuario = async (usuarios, usuario) => {
     // Criptografando a senha
     const saltRound = 10;
     usuario.senha = await bcrypt_1.default.hash(usuario.senha, saltRound);
+    // Inicialiando datas
+    usuario.dataCadastro = dataFormatada(new Date());
+    usuario.dataUltimaAlteracao = dataFormatada(new Date());
     usuarios.push(usuario);
     (0, csvService_1.salvarArquivo)(usuarios);
     return usuarios;
@@ -63,7 +67,7 @@ const listarUsuarios = (usuarios) => {
 exports.listarUsuarios = listarUsuarios;
 // Listando por id
 const listUsuarioId = (usuario, idPassado) => {
-    const userencontrado = usuario.find(user => user.id.trim() === idPassado.trim());
+    const userencontrado = usuario.find(user => user.id === idPassado);
     if (!userencontrado) {
         return `Usuário com ID ${idPassado} não encontrado.`;
     }
@@ -104,6 +108,8 @@ const atualizarDados = (usuario, id, novosDados) => {
         user.papel = novosDados.papel;
     if (novosDados.status)
         user.status = 'ativo';
+    // Atualizei a data conforme a ultima alteração
+    user.dataUltimaAlteracao = dataFormatada(new Date());
     (0, csvService_1.salvarArquivo)(usuario);
 };
 exports.atualizarDados = atualizarDados;

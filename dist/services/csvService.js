@@ -19,7 +19,8 @@ const salvarArquivo = (usuarios) => {
             user.dataCadastro,
             user.dataUltimaAlteracao,
             user.status
-        ].join(', '));
+        ].join(', ') // Iterei sobre os usuarios e adicionei ', ' no final de cada iteração.
+        );
         // Adicionei o cabeçalho aos dados no arquivo csv
         const csvFormatado = [cabecalho, ...user].join('\n');
         fs_1.default.writeFileSync(filePath, csvFormatado, 'utf8');

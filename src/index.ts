@@ -18,15 +18,23 @@ const carregarUsuarios = (): Usuario[] => {
         const data = fs.readFileSync(filePath, 'utf8');
         const lines = data.split('\n').slice(1); 
         return lines.filter(line => line.trim()).map(line => {
+
             const [id, nome, email, senha, papel, dataCadastro, dataUltimaAlteracao, status] = line.split(', ');
+
+            const dataCadastroDate = new Date(dataCadastro);
+            const dataUltimaAlteracaoDate = new Date(dataUltimaAlteracao);
+            
+            const dataCadastroFormatada = isNaN(dataCadastroDate.getTime()) ? 'Data inválida' : dataFormatada(dataCadastroDate);
+            const dataUltimaAlteracaoFormatada = isNaN(dataUltimaAlteracaoDate.getTime()) ? 'Data inválida' : dataFormatada(dataUltimaAlteracaoDate);
+
             return {
                 id,
                 nome,
                 email,
                 senha,
                 papel,
-                dataCadastro: dataFormatada(new Date(dataCadastro)),
-                dataUltimaAlteracao: dataFormatada(new Date(dataUltimaAlteracao)),
+                dataCadastro: dataCadastroFormatada,
+                dataUltimaAlteracao: dataUltimaAlteracaoFormatada,
                 status: status as Status
             };
         });

@@ -3,9 +3,7 @@ import { Usuario } from "../models/usuario";
 
 const filePath = './src/data/listUsuario.csv';
 
-
-
-export const salvarArquivo = (usuarios: Usuario[])=> {
+export const salvarArquivo = (usuarios: Usuario[]) => {
     try {
        // Adicionando cabeçalho
         const cabecalho = 'Id | Nome | E-mail | Senha | Papel | Data de Cadastro | Data da Última Alteração | Status';

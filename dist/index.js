@@ -17,17 +17,21 @@ const carregarUsuarios = () => {
             return [];
         }
         const data = fs_1.default.readFileSync(filePath, 'utf8');
-        const lines = data.split('\n').slice(1); // Ignorar o cabeçalho
+        const lines = data.split('\n').slice(1);
         return lines.filter(line => line.trim()).map(line => {
             const [id, nome, email, senha, papel, dataCadastro, dataUltimaAlteracao, status] = line.split(', ');
+            const dataCadastroDate = new Date(dataCadastro);
+            const dataUltimaAlteracaoDate = new Date(dataUltimaAlteracao);
+            const dataCadastroFormatada = isNaN(dataCadastroDate.getTime()) ? 'Data inválida' : (0, usuarioService_1.dataFormatada)(dataCadastroDate);
+            const dataUltimaAlteracaoFormatada = isNaN(dataUltimaAlteracaoDate.getTime()) ? 'Data inválida' : (0, usuarioService_1.dataFormatada)(dataUltimaAlteracaoDate);
             return {
                 id,
                 nome,
                 email,
                 senha,
                 papel,
-                dataCadastro: (0, usuarioService_1.dataFormatada)(new Date(dataCadastro)),
-                dataUltimaAlteracao: (0, usuarioService_1.dataFormatada)(new Date(dataUltimaAlteracao)),
+                dataCadastro: dataCadastroFormatada,
+                dataUltimaAlteracao: dataUltimaAlteracaoFormatada,
                 status: status
             };
         });

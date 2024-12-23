@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
-import { Status, Usuario } from "../models/usuario";
+import { Usuario } from "../models/usuario";
 import { salvarArquivo } from "./csvService";
 import { v4 as uuidv4 } from "uuid";
-import { usuario } from "../seeds/usuarioSeeds";
+
 
 // Esta função irá formatar as datas
-export function dataFormatada(data: Date) {
+export function dataFormatada(data: Date): string {
     return data.toLocaleString('pt-BR', {
         day: '2-digit',
         month: '2-digit',
@@ -14,7 +14,7 @@ export function dataFormatada(data: Date) {
         minute: '2-digit',
         second: '2-digit',
         hour12: false,
-    }).replace(/, /, ' ');
+    }).replace(',', '');
 }
 
 // Função para Validação de email
@@ -51,6 +51,10 @@ export const cadastrarUsuario = async (usuarios: Usuario[], usuario: Usuario) =>
     const saltRound = 10;
     usuario.senha = await bcrypt.hash(usuario.senha, saltRound)
 
+    // Inicialiando datas
+    usuario.dataCadastro = dataFormatada(new Date());
+    usuario.dataUltimaAlteracao = dataFormatada(new Date());
+
     usuarios.push(usuario);
     salvarArquivo(usuarios)
     return usuarios;
@@ -66,7 +70,7 @@ export const listarUsuarios = (usuarios: Usuario[]): void => {
 
 // Listando por id
 export const listUsuarioId = (usuario: Usuario[], idPassado: string) => {
-    const userencontrado = usuario.find(user => user.id.trim() === idPassado.trim());
+    const userencontrado = usuario.find(user => user.id === idPassado);
 
     if (!userencontrado) {
         return `Usuário com ID ${idPassado} não encontrado.`
@@ -117,7 +121,9 @@ export const atualizarDados = (usuario: Usuario[], id: string, novosDados:
     if (novosDados.papel) user.papel = novosDados.papel;
     if (novosDados.status) user.status = 'ativo';
 
-    salvarArquivo(usuario)
+    // Atualizei a data conforme a ultima alteração
+    user.dataUltimaAlteracao = dataFormatada(new Date());
+    salvarArquivo(usuario);
 }
 
 // Testando o código
