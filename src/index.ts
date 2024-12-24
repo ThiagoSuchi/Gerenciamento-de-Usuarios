@@ -5,6 +5,8 @@ import { Usuario, Status } from "./models/usuario";
 import { cadastrarUsuario, listarUsuarios, listUsuarioId, deletUsuario, atualizarDados, dataFormatada } from "./services/usuarioService";
 import { papeisUsuario } from './seeds/papeisSeeds';
 import { v4 as uuidv4 } from "uuid";
+import { usuario } from './seeds/usuarioSeeds';
+import { userInfo } from 'os';
 
 // Definir o caminho do arquivo CSV
 const filePath = './src/data/listUsuario.csv';
@@ -102,7 +104,7 @@ program
         } else {
             console.log('Usuário inválido, o id fornecido não coincide');
         }
-    });
+    });    
 
 // Comando para deletar um usuário pelo ID
 program
@@ -157,10 +159,17 @@ program
     .description('Ver permissões de um usuário de acordo com seu papel')
     .action((id) => {
         // Procura o papel de usuário pelo ID
-        const papel = papeisUsuario.find(p => p.id === parseInt(id, 10));
+        const useID = usuarios.find(u => u.id === id);
+
+        if (!useID) {
+            console.log(`Usuário com o ID ${id} não encontrado.`);
+            return;
+        }
+        
+        const papel = papeisUsuario.find(p => p.nome.trim() === useID.papel.trim())
 
         if (!papel) {
-            console.log(`Usuário com ID ${id} não encontrado.`);
+            console.log(`O papel para o usuário ${useID.nome}, não foi encontrado.`);
             return;
         }
 

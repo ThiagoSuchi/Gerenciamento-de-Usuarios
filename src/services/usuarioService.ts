@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 import { Usuario } from "../models/usuario";
 import { salvarArquivo } from "./csvService";
 import { Status } from "../models/usuario"; // Add this line to import Status
-import { usuario } from '../seeds/usuarioSeeds';
 
 // Esta função irá formatar as datas
 export function dataFormatada(data: Date): string {
