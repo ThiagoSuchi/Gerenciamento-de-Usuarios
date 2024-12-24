@@ -5,8 +5,6 @@ import { Usuario, Status } from "./models/usuario";
 import { cadastrarUsuario, listarUsuarios, listUsuarioId, deletUsuario, atualizarDados, dataFormatada } from "./services/usuarioService";
 import { papeisUsuario } from './seeds/papeisSeeds';
 import { v4 as uuidv4 } from "uuid";
-import { usuario } from './seeds/usuarioSeeds';
-import { userInfo } from 'os';
 
 // Definir o caminho do arquivo CSV
 const filePath = './src/data/listUsuario.csv';
